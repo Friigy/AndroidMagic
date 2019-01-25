@@ -23,6 +23,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
+    public ArrayAdapterList arrayAdapterList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         final List<Film> listFilm = new ArrayList<Film>();
 
+        arrayAdapterList = new ArrayAdapterList(this, R.layout.content_main, listFilm);
+
         Film film1 = new Film();
         film1.setName("Die Hard");
         film1.setDateSortie(new Date(1988, 7, 20));
@@ -58,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
         listFilm.add(film2);
         listFilm.add(film3);
 
-        final ArrayAdapterList arrayAdapterList = new ArrayAdapterList(this, R.layout.content_main, listFilm);
-
         listFilmView.setAdapter(arrayAdapterList);
 
         Button addButton = (Button) findViewById(R.id.addFilmButton);
@@ -71,12 +72,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 ExecutorService service =  Executors.newFixedThreadPool(5);
                 for(Film film: listFilm) {
-                    AsyncTaskRandom atf = new AsyncTaskRandom();
+                    AsyncTaskRandom atf = new AsyncTaskRandom(MainActivity.this);
                     atf.executeOnExecutor(service, film);
                 }
             }
         };
-        updateButton.setOnClickListener(listenerRandomFilm);
+        randomButton.setOnClickListener(listenerRandomFilm);
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.model.Film;
 
 import java.io.IOException;
@@ -12,8 +13,10 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class AsyncTaskRandom extends AsyncTask<Film, Object, Object> {
-    public AsyncTaskRandom() {
+    private MainActivity mainActivity;
 
+    public AsyncTaskRandom(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -37,5 +40,7 @@ public class AsyncTaskRandom extends AsyncTask<Film, Object, Object> {
 
 
     @Override
-    protected void onPostExecute(Object o) {}
+    protected void onPostExecute(Object o) {
+        mainActivity.arrayAdapterList.notifyDataSetChanged();
+    }
 }
