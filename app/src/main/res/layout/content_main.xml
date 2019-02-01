@@ -19,12 +19,12 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/addFilmButton"
+                android:id="@+id/randomThreadPoolButton"
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Add film"
+                android:text="Random Thread Pool"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="16dp" />
 

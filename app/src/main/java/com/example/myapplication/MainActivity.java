@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,9 +21,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     public ArrayAdapterList arrayAdapterList;
+    public LinkedBlockingDeque<Runnable> blockQueue;
+    public ThreadPoolExecutor threadPool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +61,14 @@ public class MainActivity extends AppCompatActivity {
         listFilmView.setAdapter(arrayAdapterList);
         Button randomAsyncButton = (Button) findViewById(R.id.randomAsyncButton);
         Button randomThreadButton = (Button) findViewById(R.id.randomThreadButton);
+        Button randomThreadPoolButton = (Button) findViewById(R.id.randomThreadPoolButton);
 
         View.OnClickListener listenerAsyncRandomFilm = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ExecutorService service =  Executors.newFixedThreadPool(5);
                 for(Film film: listFilm) {
                     AsyncTaskRandom atf = new AsyncTaskRandom(MainActivity.this);
-                    atf.executeOnExecutor(service, film);
+                    atf.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, film);
                 }
             }
         };
@@ -79,6 +86,18 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         randomThreadButton.setOnClickListener(listenerThreadRandomFilm);
+
+        blockQueue = new LinkedBlockingDeque<>();
+        threadPool = new ThreadPoolExecutor(5, 5, 10, TimeUnit.SECONDS, blockQueue);
+        View.OnClickListener listenerThreadPoolRandomFilm = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (Film film: listFilm) {
+                    threadPool.execute(new FilmThreadRandom(film, MainActivity.this));
+                }
+            }
+        };
+        randomThreadPoolButton.setOnClickListener(listenerThreadRandomFilm);
     }
 
     @Override
