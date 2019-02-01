@@ -1,4 +1,4 @@
-package com.example.myapplication.controller;
+package com.example.myapplication.async;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

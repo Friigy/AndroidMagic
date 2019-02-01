@@ -29,20 +29,20 @@
                 tools:layout_editor_absoluteY="16dp" />
 
             <Button
-                android:id="@+id/updateFilmButton"
+                android:id="@+id/randomThreadButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Update films"
+                android:text="Random Thread"
                 tools:layout_editor_absoluteX="277dp"
                 tools:layout_editor_absoluteY="16dp" />
 
             <Button
-                android:id="@+id/randomFilmButton"
+                android:id="@+id/randomAsyncButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Random" />
+                android:text="Random Async" />
 
         </LinearLayout>
 
