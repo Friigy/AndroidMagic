@@ -110,14 +110,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    Log.d("CHECKPERM","Read Storage is NOT granted");
+                    Log.d("CHECKPERM","Read Storage permission is NOT granted");
                 } else {
-                    Log.d("CHECKPERM","Read Storage is granted");
+                    Log.d("CHECKPERM","Read Storage permission is granted");
                 }
                 if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    Log.d("CHECKPERM","Write Storage is NOT granted");
+                    Log.d("CHECKPERM","Write Storage permission is NOT granted");
                 } else {
-                    Log.d("CHECKPERM","Write Storage is granted");
+                    Log.d("CHECKPERM","Write Storage permission is granted");
+                }
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    Log.d("CHECKPERM","Access Fine Location permission is NOT granted");
+                } else {
+                    Log.d("CHECKPERM","Access Fine Location permission is granted");
+                }
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    Log.d("CHECKPERM","Camera permission is NOT granted");
+                } else {
+                    Log.d("CHECKPERM","Camera permission is granted");
                 }
             }
         };
@@ -128,7 +138,9 @@ public class MainActivity extends AppCompatActivity {
         PERMISSION CHECK
         ASKING USER FOR PERMISSIONS
             - WRITE EXTERNAL STORAGE
-            - GPS
+            - READ EXTERNAL STORAGE
+            - ACCESS FINE LOCATION (gps needs roll 99)
+            - CAMERA
          */
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             Log.d("SALOPE","Read Storage permission is NOT granted");
@@ -142,9 +154,25 @@ public class MainActivity extends AppCompatActivity {
             Log.d("SALOPE","Write Storage permission is NOT granted");
             ActivityCompat.requestPermissions(MainActivity.this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    1);
+                    2);
         } else {
             Log.d("SALOPE","Write Storage permission is granted");
+        }
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("SALOPE","Write Storage permission is NOT granted");
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    3);
+        } else {
+            Log.d("SALOPE","Access Fine Location permission is granted");
+        }
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("SALOPE","Write Storage permission is NOT granted");
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.CAMERA},
+                    4);
+        } else {
+            Log.d("SALOPE","Camera permission is granted");
         }
     }
 
