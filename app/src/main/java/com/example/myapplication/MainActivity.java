@@ -1,9 +1,14 @@
 package com.example.myapplication;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -87,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         };
         randomThreadButton.setOnClickListener(listenerThreadRandomFilm);
 
-        blockQueue = new LinkedBlockingDeque<>();
+        blockQueue = new LinkedBlockingDeque<Runnable>();
         threadPool = new ThreadPoolExecutor(5, 5, 10, TimeUnit.SECONDS, blockQueue);
         View.OnClickListener listenerThreadPoolRandomFilm = new View.OnClickListener() {
             @Override
@@ -98,6 +103,49 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         randomThreadPoolButton.setOnClickListener(listenerThreadRandomFilm);
+
+        Button checkPerm = (Button) findViewById(R.id.checkPerm);
+
+        View.OnClickListener listenerCheckPerm = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    Log.d("CHECKPERM","Read Storage is NOT granted");
+                } else {
+                    Log.d("CHECKPERM","Read Storage is granted");
+                }
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    Log.d("CHECKPERM","Write Storage is NOT granted");
+                } else {
+                    Log.d("CHECKPERM","Write Storage is granted");
+                }
+            }
+        };
+        checkPerm.setOnClickListener(listenerCheckPerm);
+
+
+        /*
+        PERMISSION CHECK
+        ASKING USER FOR PERMISSIONS
+            - WRITE EXTERNAL STORAGE
+            - GPS
+         */
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("SALOPE","Read Storage permission is NOT granted");
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    1);
+        } else {
+            Log.d("SALOPE","Read Storage permission is granted");
+        }
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Log.d("SALOPE","Write Storage permission is NOT granted");
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    1);
+        } else {
+            Log.d("SALOPE","Write Storage permission is granted");
+        }
     }
 
     @Override
